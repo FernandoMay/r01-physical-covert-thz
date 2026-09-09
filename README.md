@@ -3,6 +3,9 @@
 **Paper:** Physical-Layer Covert Communications via Electromagnetic Scattering and Phase-Noise Inversion in Sub-THz Waveforms
 **Venue:** ICRCV 2026
 **Authors:** Fernando May Fuentes et al.
+**ORCID:** https://orcid.org/0009-0002-3953-5224
+**Conference deadline:** September 15, 2026 (verify current CFP status)
+**Submission site:** http://www.icrcv.org/
 
 ## Quick Start
 
@@ -16,9 +19,9 @@ pytest tests/ -v
 
 | Metric | Value |
 |--------|-------|
-| Avg KL Divergence | 0.023 |
-| Covertness Score | 0.87 |
-| Detectable | 5% |
+| Avg KL Divergence | 0.036 |
+| Covertness Score | 0.669 |
+| Detectable | 10% |
 
 ## Citation
 

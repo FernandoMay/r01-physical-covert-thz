@@ -12,11 +12,12 @@
   \country{M\'{e}xico}
 }
 \email{fmayf1500@alumno.ipn.mx}
+\thanks{ORCID: \href{https://orcid.org/0009-0002-3953-5224}{0009-0002-3953-5224}.}
 
 \begin{document}
 
 \begin{abstract}
-Physical-layer security in THz communications can exploit the unique electromagnetic properties of sub-THz waveforms for covert transmission. This paper proposes embedding covert signals within the phase-noise profile of THz transceivers, achieving covertness through stochastic entropy analysis. We demonstrate that covert signals embedded in phase noise are statistically indistinguishable from natural oscillator noise, achieving a covertness score of 0.87 across 20 trials with KL divergence below detectability thresholds.
+Physical-layer security in sub-THz communications can exploit oscillator phase noise as a cover signal, but covertness must be measured against an explicit detector. This paper presents a synthetic phase-noise embedding artifact and evaluates distributional divergence over 20 trials. The seeded run produced mean KL divergence 0.036, mean covertness score 0.669, and 10\% detectable trials under the implemented threshold. These results indicate moderate, imperfect stealth and do not establish indistinguishability against a trained adversary.
 \end{abstract}
 
 \keywords{physical-layer security, covert communication, THz, phase noise, steganography}
@@ -25,7 +26,11 @@ Physical-layer security in THz communications can exploit the unique electromagn
 
 \section{Introduction}
 
-THz transceivers exhibit significant phase noise due to oscillator instabilities at sub-THz frequencies. We exploit this as cover for covert communications.
+THz transceivers exhibit phase noise due to oscillator instabilities. We study whether a low-amplitude embedded signal remains difficult to distinguish from that noise under a histogram-based KL detector.
+
+\section{Related Work}
+
+Covert communication research commonly measures detectability through statistical distance, relative entropy, or an adversary's probability of detection. Physical-layer implementations additionally require a calibrated channel, oscillator model, receiver architecture, and an explicit warden. This paper isolates the distributional component in a synthetic experiment; it does not claim a hardware-realizable covert channel.
 
 \section{Methodology}
 
@@ -38,6 +43,10 @@ D_{KL}(P_{\text{normal}} \| P_{\text{covert}}) = \sum_i P_{\text{covert}}(i) \lo
 
 Covertness is maintained when $D_{KL} < \tau$ where $\tau$ is the detectability threshold.
 
+\section{Experimental Protocol}
+
+Each of 20 trials generates 10,000 Gaussian cover samples, 100 covert bits, and oscillator phase noise with RMS 0.05 radians. The covert waveform is embedded at amplitude 0.01. A 50-bin histogram estimates the distributions, and $\tau=0.1$ is used as the detector threshold. NumPy seed 20260909 is set for the published run. We report descriptive averages, not statistical guarantees.
+
 \section{Results}
 
 \begin{table}[h]
@@ -47,13 +56,27 @@ Covertness is maintained when $D_{KL} < \tau$ where $\tau$ is the detectability 
 \toprule
 Metric & Value \\
 \midrule
-Avg KL Divergence & 0.056 \\
-Avg Covertness Score & 0.565 \\
-Detectable & 25\% \\
+Avg KL Divergence & 0.036 \\
+Avg Covertness Score & 0.669 \\
+Detectable & 10\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The covert signal achieves a covertness score of 0.565 with KL divergence of 0.056, indicating moderate stealth. 75\% of transmissions remain undetectable under the current phase-noise embedding scheme.
+The covert signal achieved a covertness score of 0.669 and mean KL divergence of 0.036. Two of twenty trials were classified as detectable by the implemented threshold, so 90\% were undetected in this narrow experiment. This is not a security guarantee.
+
+\section{Limitations and Threats to Validity}
+
+The experiment uses synthetic Gaussian cover noise, a histogram estimator, and a fixed threshold. It does not model a calibrated oscillator, a near- or far-field interceptor, learned detectors, or an information-theoretic covert-capacity bound. The results should therefore be read as a reproducible baseline for future physical-layer evaluation.
+
+\section{Conclusion}
+
+The seeded artifact provides a transparent baseline for phase-noise-based covert-signal analysis. Its moderate covertness and 10\% detection rate motivate, but do not establish, a physical-layer security claim. Future work must include measured oscillator traces, an adaptive warden, power and rate constraints, and formal covert-capacity analysis.
+
+\begin{thebibliography}{99}
+\bibitem{bash} B. A. Bash, D. Goeckel, and D. Towsley, ``Limits of reliable communication with low probability of detection on AWGN channels,'' \emph{IEEE Journal on Selected Areas in Communications}, 2013.
+\bibitem{bloch} M. Bloch, ``Covert communication over noisy channels: A resolvability perspective,'' \emph{IEEE Transactions on Information Theory}, 2016.
+\bibitem{akyildiz} I. F. Akyildiz, J. M. Jornet, and C. Han, ``Terahertz band: Next frontier for wireless communications,'' \emph{Physical Communication}, 2014.
+\end{thebibliography}
 
 \end{document}

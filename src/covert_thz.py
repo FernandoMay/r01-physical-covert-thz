@@ -108,6 +108,7 @@ class SimulationRunner:
 
 
 if __name__ == "__main__":
+    np.random.seed(20260909)
     print("=" * 60)
     print("Physical-Layer Covert Communications in Sub-THz")
     print("ICRCV 2026 — Simulation Runner")
